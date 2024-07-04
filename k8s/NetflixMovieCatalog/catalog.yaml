@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: server
-        image: maayanassraf/netflix-movie-catalog:0.1
+        image: davidhei/netflix:catalog-v0.0.2
 ---
 apiVersion: v1
 kind: Service
