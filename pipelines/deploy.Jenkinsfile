@@ -25,7 +25,7 @@ pipeline {
                 sh '''#!/bin/bash
                   cd k8s/$SERVICE_NAME
                   ls
-                  sed -i "s#^\(.*image: \).*#\1$IMAGE_FULL_NAME_PARAM#" k8s/NetflixFrontend/frontend.yaml
+                  sed -i "s#^\(.*image: \).*#\1$IMAGE_FULL_NAME_PARAM#" frontend.yaml
                   git commit -m "changed image version"
                   git push
                 '''
