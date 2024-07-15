@@ -28,7 +28,7 @@ pipeline {
                   sed -i 's|image: .*|image: ${IMAGE_FULL_NAME_PARAM}|' frontend.yaml
                   git add frontend.yaml
                   git commit -m "changed image version"
-                  git push
+                  git push origin HEAD:main
                 '''
             }
         }
