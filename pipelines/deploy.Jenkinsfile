@@ -22,10 +22,10 @@ pipeline {
                    * Setting global Git user.name and user.email in 'Manage Jenkins > System' is recommended.
                    * Setting Shell executable to `/bin/bash` in 'Manage Jenkins > System' is recommended.
                 */
-                sh '''#!/bin/bash
+                sh '''
                   cd k8s/$SERVICE_NAME
                   ls
-                  sed -i "s#^\(.*image: \).*#\1$IMAGE_FULL_NAME_PARAM#" frontend.yaml
+                  sed -i 's|image: .*|image: ${IMAGE_FULL_NAME_PARAM}|' frontend.yaml
                   git commit -m "changed image version"
                   git push
                 '''
