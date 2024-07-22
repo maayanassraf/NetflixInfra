@@ -25,10 +25,10 @@ pipeline {
                 sh '''
                   cd k8s/$SERVICE_NAME
                   ls
-                  sed -i 's|image: .*|image: ${IMAGE_FULL_NAME_PARAM}|' frontend.yaml
+                  sed -i "s|image: .*|image: ${IMAGE_FULL_NAME_PARAM}|" frontend.yaml
                   git add frontend.yaml
                   git commit -m "changed image version"
-                  git push origin HEAD:main
+                  git push origin main
                 '''
             }
         }
