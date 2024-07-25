@@ -11,27 +11,32 @@ pipeline {
     stages {
         stage('Git Setup') {
             steps {
-                sh 'git checkout main'
-                sh 'git pull'
+                sh 'git checkout -b main || git checkout main'
             }
         }
         stage('Update Yaml') {
             steps {
                 sh '''
                   cd k8s/$SERVICE_NAME
-                  ls
                   sed -i "s|image: .*|image: ${IMAGE_FULL_NAME_PARAM}|" frontend.yaml
                   git add frontend.yaml
-                  git commit -m "changed image version"
+                  git commit -m "Jenkins deploy $SERVICE_NAME $IMAGE_FULL_NAME_PARAM"
                 '''
             }
         }
-        stage('Git Push') {
+        stage('Git push') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_TOKEN')]) {
-                    sh 'git checkout -b main origin/main'
-                }
+               withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_TOKEN')]) {
+                 sh '''
+                 git push https://$GITHUB_TOKEN@github.com/maayanassraf/NetflixInfra.git main
+                 '''
+               }
             }
+        }
+    }
+    post {
+        cleanup {
+            cleanWs()
         }
     }
 }
