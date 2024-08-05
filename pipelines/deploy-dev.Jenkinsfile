@@ -19,7 +19,7 @@ pipeline {
                 sh '''
                   cd k8s/$SERVICE_NAME
                   sed -i "s|image: .*|image: ${IMAGE_FULL_NAME_PARAM}|" frontend.yaml
-                  git add frontend.yaml
+                  git add deployment.yaml
                   git commit -m "Jenkins deploy $SERVICE_NAME $IMAGE_FULL_NAME_PARAM"
                 '''
             }
